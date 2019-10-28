@@ -1,0 +1,14 @@
+module customerOrderObjectModel_mapping_run
+open ORMStrategies
+open AssociationMappings
+open customerOrderObjectModel
+open assertions
+fact{
+mixedAssociationStrategy[CustomerOrderAssociation]
+mixedStrategy[PreferredCustomer]
+}
+
+pred mapping_run_customerOrderObjectModel{}
+run mapping_run_customerOrderObjectModel for 11
+
+
