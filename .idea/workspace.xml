@@ -2,8 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f39e0e92-5044-44d8-891d-614c5fdec7c9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Synthesizer/AlloyOMToAlloyDM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/AlloyOMToAlloyDM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Synthesizer/CodeNamePair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/CodeNamePair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Synthesizer/DataProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/DataProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Synthesizer/Evaluator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Evaluator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Synthesizer/FileOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/FileOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Synthesizer/FrontParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/FrontParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Synthesizer/MetricValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/MetricValue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Synthesizer/ORMParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/ORMParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Synthesizer/PrintOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/PrintOrder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Synthesizer/Sig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Sig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Synthesizer/SmartBridge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/SmartBridge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Synthesizer/SolveAlloyDM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/SolveAlloyDM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Synthesizer/Synthesizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/virginia/cs/Synthesizer.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +84,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1572288135756</updated>
-      <workItem from="1572288139272" duration="1079000" />
+      <workItem from="1572288139272" duration="1285000" />
     </task>
     <servers />
   </component>

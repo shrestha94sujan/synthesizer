@@ -1,9 +1,7 @@
-package edu.virginia.cs.Synthesizer;
+package edu.virginia.cs;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Pattern;
 
 /**
  * Created by IntelliJ IDEA. User: ct4ew Date: 7/23/13 Time: 3:53 PM To change

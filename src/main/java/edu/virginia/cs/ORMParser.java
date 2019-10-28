@@ -1,4 +1,4 @@
-package edu.virginia.cs.Synthesizer;
+package edu.virginia.cs;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

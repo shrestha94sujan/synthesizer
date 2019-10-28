@@ -1,4 +1,4 @@
-package edu.virginia.cs.Synthesizer;
+package edu.virginia.cs;
 
 /**
  * Created by IntelliJ IDEA.

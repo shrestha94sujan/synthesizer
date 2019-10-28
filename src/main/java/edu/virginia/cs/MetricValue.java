@@ -1,4 +1,4 @@
-package edu.virginia.cs.Synthesizer;
+package edu.virginia.cs;
 
 public class MetricValue {
     private Integer solutionNo = 0;

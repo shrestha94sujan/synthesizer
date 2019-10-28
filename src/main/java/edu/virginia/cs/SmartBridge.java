@@ -1,4 +1,4 @@
-package edu.virginia.cs.Synthesizer;
+package edu.virginia.cs;
 
 import java.io.File;
 import java.io.FileOutputStream;

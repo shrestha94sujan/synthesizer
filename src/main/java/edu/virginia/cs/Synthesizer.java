@@ -1,4 +1,4 @@
-package edu.virginia.cs.Synthesizer;
+package edu.virginia.cs;
 
 import edu.mit.csail.sdg.alloy4.Err;
 
