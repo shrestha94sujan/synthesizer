@@ -51,12 +51,16 @@
         </plugins>
     </build>
 
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
 
     <dependencies>
         <dependency>
-            <groupId>${groupId}</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>AlloyEngine</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
 <!--            <classifier>jar-with-dependencies</classifier>-->
         </dependency>
