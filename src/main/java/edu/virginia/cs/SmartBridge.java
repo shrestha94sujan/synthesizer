@@ -439,8 +439,8 @@ public class SmartBridge {
             }
             if (isParetoOptimal) {
                 paretoOptimalSolutions.add(solutionMV);
-                // file.println("Solution #" + solutionNo +
-                // " is a pareto Optimal Solution.");
+                 file.println("Solution #" + solutionNo +
+                 " is a pareto Optimal Solution.");
                 // System.out.println("Solution #" + solutionNo +
                 // " is a pareto Optimal Solution.");
                 solutionsMV.add(solutionMV);
