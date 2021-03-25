@@ -3,77 +3,71 @@ module AssociationMappings
 open relationalModel
 open Declaration
 
-pred ForeignKeyEmbedding[asc:Association]{
-	no t:Table|t.tAssociate=asc
-	//one t:Table| t.tAssociate=asc.dst
-	one t:Table| asc.dst in t.tAssociate
+one sig ForeignKeyEmbeddingStrategy extends Strategy {} {
+  no assignees & Class
+  all a : Association | a in assignees <=> ForeignKeyEmbedding[a]
+}
 
+one sig OwnAssociationTableStrategy extends Strategy {} {
+  no assignees & Class
+  all a : Association | a in assignees <=> OwnAssociationTable[a]
+}
+
+one sig MergingOneTableStrategy extends Strategy {} {
+  no assignees & Class
+  all a : Association | a in assignees <=> MergingOneTable[a]
+}
+
+one sig AssociationMappingStrategies {
+  FKE : set Association,
+  OAT : set Association,
+  MOT : set Association  
+} {
+  all a : Association {
+    a in FKE <=> ForeignKeyEmbedding[a]
+    a in OAT <=> OwnAssociationTable[a]
+    a in MOT <=> MergingOneTable[a]
+  }
+}
+
+pred ForeignKeyEmbedding[asc:Association]{
+	one t:Table| t.tAssociate=asc.dst
+	no t:Table|t.tAssociate=asc
 	!((asc.src.~tAssociate = asc.src.~parent.~tAssociate) || (asc.src.~tAssociate = asc.src.parent.~tAssociate)) =>
 		one t:Table| t.tAssociate=asc.src
 
-	//# asc.~tAssociate = 0
 	no asc.~tAssociate 
+	one asc.dst.~tAssociate 
 
-	//# asc.dst.~tAssociate = 1
-	//one asc.dst.~tAssociate 
-	some asc.dst.~tAssociate 
+	one asc.src.~tAssociate 
 
-
-	//# asc.src.~tAssociate = 1
-	//one asc.src.~tAssociate 
-	some asc.src.~tAssociate 
 
 	all a:asc.src.attrSet|a not in Class => {
 		one f:Field| f.fAssociate=a && (one f.fAssociate) && (one a.~fAssociate)  &&
 		f in a.~attrSet.~tAssociate.fields
 	}
 
-// Jan_10: we added 	the following constraint into the relational model.als 
-//	all c:Class| c.~tAssociate.fields in (c.~tAssociate.foreignKey + c.attrSet.~fAssociate  + c.^parent.attrSet.~fAssociate)
-// and accordingly, we removed the following too restrictive constraints from here
-
-//	asc.src.~tAssociate.fields.fAssociate = asc.src.attrSet
-//	#asc.src.~tAssociate.fields = # asc.src.attrSet
-
-asc.src.~tAssociate.fields in 
-(asc.src.~tAssociate.foreignKey + asc.src.~tAssociate.tAssociate.attrSet.~fAssociate +DType.~fAssociate) 
+	asc.src.~tAssociate.fields in 
+	(asc.src.~tAssociate.foreignKey + asc.src.~tAssociate.tAssociate.attrSet.~fAssociate +DType.~fAssociate) 
 										
-//(asc.src.~tAssociate.foreignKey + asc.src.attrSet.~fAssociate  + asc.src.^parent.attrSet.~fAssociate)  ||
-
 
 	all a:asc.dst.attrSet|a not in Class => {
 		one f:Field| f.fAssociate=a && (one f.fAssociate) && (one a.~fAssociate)  &&
 		f in a.~attrSet.~tAssociate.fields
 	}
 
-// Jan_10: we added 	the following constraint into the relational model.als 
-//	all c:Class| c.~tAssociate.fields in (c.~tAssociate.foreignKey + c.attrSet.~fAssociate  + c.^parent.attrSet.~fAssociate)
-// and accordingly, we removed the following too restrictive constraints from here
-
-//	#asc.dst.~tAssociate.fields = # (asc.dst.attrSet + asc.src.~tAssociate.primaryKey)
-
-// moved from the relational model.als to here
-asc.dst.~tAssociate.fields in 
-//(asc.dst.~tAssociate.foreignKey + asc.dst.attrSet.~fAssociate  + asc.dst.^parent.attrSet.~fAssociate)
-(asc.dst.~tAssociate.foreignKey + asc.dst.~tAssociate.tAssociate.attrSet.~fAssociate +DType.~fAssociate) 
-
+	asc.dst.~tAssociate.fields in 
+	(asc.dst.~tAssociate.foreignKey + asc.dst.~tAssociate.tAssociate.attrSet.~fAssociate +DType.~fAssociate) 
 
 	//all t:Table| t.primaryKey = t.tAssociate.id.~fAssociate
 	asc.src.~tAssociate.primaryKey = asc.src.id.~fAssociate
 	asc.dst.~tAssociate.primaryKey = asc.dst.id.~fAssociate
 
 	asc.src.~tAssociate.primaryKey in asc.dst.~tAssociate.fields
-//	asc.src.~tAssociate.primaryKey in (asc.dst.~tAssociate).foreignKey 
-//	#(asc.dst.~tAssociate).foreignKey <= #{a:Association|a.dst=asc.dst and a.dst_multiplicity = MANY}
-//	#(asc.dst.~tAssociate).foreignKey >= 1
-//	no (asc.src.~tAssociate).foreignKey 
 
-
-	//asc.src.~tAssociate.primaryKey = (asc.dst.~tAssociate).foreignKey 
 	asc.src.~tAssociate.primaryKey in (asc.dst.~tAssociate).foreignKey 
 	#(asc.dst.~tAssociate).foreignKey = #{a:Association|a.dst=asc.dst and a.dst_multiplicity = MANY and no a.~tAssociate}
 	
-	//no (asc.src.~tAssociate).foreignKey 	
 	# (asc.src.~tAssociate).foreignKey = #{a:Association|a.dst=asc.src and a.dst_multiplicity = MANY and no a.~tAssociate}
 
 }
@@ -85,11 +79,8 @@ pred OwnAssociationTable[asc:Association]{
 	one t:Table|asc.dst in t.tAssociate
 	one t:Table|t.tAssociate=asc
 
-	//# asc.~tAssociate = 1
 	one asc.~tAssociate 
-	//# asc.src.~tAssociate = 1
 	one asc.src.~tAssociate 
-	//# asc.dst.~tAssociate = 1
 	one asc.dst.~tAssociate 
 
 	all a:asc.src.attrSet|a not in Class => {
@@ -97,32 +88,17 @@ pred OwnAssociationTable[asc:Association]{
 		f in a.~attrSet.~tAssociate.fields
 	}
 
-// Jan_10: we added 	the following constraint into the relational model.als 
-//	all c:Class| c.~tAssociate.fields in (c.~tAssociate.foreignKey + c.attrSet.~fAssociate  + c.^parent.attrSet.~fAssociate)
-// and accordingly, we removed the following too restrictive constraints from here
-
-//	asc.src.~tAssociate.fields.fAssociate = asc.src.attrSet
-//	#asc.src.~tAssociate.fields = # asc.src.attrSet
-
-asc.src.~tAssociate.fields in 
-(asc.src.~tAssociate.foreignKey + asc.src.~tAssociate.tAssociate.attrSet.~fAssociate +DType.~fAssociate) 
+	asc.src.~tAssociate.fields in 
+	(asc.src.~tAssociate.foreignKey + asc.src.~tAssociate.tAssociate.attrSet.~fAssociate +DType.~fAssociate) 
 
 	all a:asc.dst.attrSet|a not in Class => {
 		one f:Field|f.fAssociate=a &&  (one f.fAssociate) && (one a.~fAssociate)  &&
 		f in a.~attrSet.~tAssociate.fields
 	}
 
-// Jan_10: we added 	the following constraint into the relational model.als 
-//	all c:Class| c.~tAssociate.fields in (c.~tAssociate.foreignKey + c.attrSet.~fAssociate  + c.^parent.attrSet.~fAssociate)
-// and accordingly, we removed the following too restrictive constraints from here
 
-//	asc.dst.~tAssociate.fields.fAssociate = asc.dst.attrSet
-//	#asc.dst.~tAssociate.fields = # asc.dst.attrSet
-
-// moved from the relational model.als to here
-asc.dst.~tAssociate.fields in 
-//(asc.dst.~tAssociate.foreignKey + asc.dst.attrSet.~fAssociate  + asc.dst.^parent.attrSet.~fAssociate)
-(asc.dst.~tAssociate.foreignKey + asc.dst.~tAssociate.tAssociate.attrSet.~fAssociate +DType.~fAssociate) 
+	asc.dst.~tAssociate.fields in 
+	(asc.dst.~tAssociate.foreignKey + asc.dst.~tAssociate.tAssociate.attrSet.~fAssociate +DType.~fAssociate) 
 
 
 	asc.src.~tAssociate.primaryKey = asc.src.id.~fAssociate
@@ -133,8 +109,6 @@ asc.dst.~tAssociate.fields in
 	asc.~tAssociate.fields = asc.src.~tAssociate.primaryKey + asc.dst.~tAssociate.primaryKey
 	#asc.~tAssociate.fields = 2	
 
-//	no asc.src.~tAssociate.foreignKey
-//	no asc.dst.~tAssociate.foreignKey
 
 	#(asc.dst.~tAssociate).foreignKey = #{a:Association|a.dst=asc.dst and a.dst_multiplicity = MANY and no a.~tAssociate}	
 	# (asc.src.~tAssociate).foreignKey = #{a:Association|a.dst=asc.src and a.dst_multiplicity = MANY and no a.~tAssociate}
@@ -170,9 +144,10 @@ pred MergingOneTable[asc:Association]{
 }
 
 pred mixedAssociationMapping[asc:Association]{
-	asc.src_multiplicity = ONE => { OwnAssociationTable[asc] or 
+	asc.src_multiplicity = ONE => {OwnAssociationTable[asc] or 
 													ForeignKeyEmbedding[asc]} 
 	else 	OwnAssociationTable[asc]
+//	ForeignKeyEmbedding[asc]
 }
 
 

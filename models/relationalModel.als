@@ -10,7 +10,7 @@ sig Table{
 	tAssociate: some Class+Association
 }{
 	primaryKey in fields
-	foreignKey in fields // just 
+	foreignKey in fields 
 }
 
 sig Field{
@@ -24,7 +24,6 @@ fact {
 	all c:Class| lone c.~tAssociate
 	all a:Association| lone a.~tAssociate
 	Field in Table.fields
-	//all f:Field | no (f.fAssociate & Association)
 	no (Field.fAssociate & Association)
 	no (Field.fAssociate & Class)
 	Attribute in (Field.fAssociate + Class.isAbstract + Class)
@@ -32,7 +31,6 @@ fact {
 	foreignKey.fAssociate.ran in	id.ran 
 
 
-//	all c:Class| !(c in parent.Class || c in Class.parent) =>
 	all c:Class| !((c.~tAssociate = c.~parent.~tAssociate) || (c.~tAssociate = c.parent.~tAssociate)) => //.~tAssociate & c.~tAssociate) => //(no c.parent ||  
 		c.~tAssociate.fields in (c.~tAssociate.foreignKey + c.attrSet.~fAssociate  + c.^parent.attrSet.~fAssociate)
 

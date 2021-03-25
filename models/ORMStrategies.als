@@ -3,6 +3,21 @@ module ORMStrategies
 open relationalModel
 open Declaration
 
+one sig UnionSubclassStrategy extends Strategy {}
+{
+    no assignees & Association
+    all c : Class | c in assignees <=> UnionSubclass[c]
+}
+one sig JoinedSubclassStrategy extends Strategy {}
+{
+    no assignees & Association
+    all c : Class | c in assignees <=> JoinedSubclass[c]
+}
+one sig UnionSuperclassStrategy extends Strategy {}
+{
+    no assignees & Association
+    all c : Class | c in assignees <=> UnionSuperclass[c]
+}
 
 pred UnionSubclass[c:Class]{
 
@@ -40,7 +55,6 @@ c  in (isAbstract.No) =>{
 (c.~tAssociate).primaryKey = (c.id.~fAssociate)
 // Assigning the foreign Key
 (c.~tAssociate).foreignKey = none
-
 }
 
 pred JoinedSubclass[c:Class]{
@@ -74,7 +88,7 @@ f in c.~tAssociate.fields
 	}else{
 	(c.~tAssociate).foreignKey = none
 }
-
+(c.parent != none)
 }
 
 
@@ -113,16 +127,10 @@ c.~tAssociate.foreignKey + c.~tAssociate.tAssociate.attrSet.~fAssociate +f = c.~
 // Assigning the primary Key
 (c.~tAssociate).primaryKey = (c.id.~fAssociate)
 
-
 // Assigning the foreign Key
 (no a:Association| a.dst in c.*parent) =>{ 
-//	no (c.~tAssociate).foreignKey
-	//no (asc.src.~tAssociate).foreignKey 	
-	//# (c.~tAssociate).foreignKey = #{a:Association|a.dst=c and a.dst_multiplicity = MANY and no a.~tAssociate}
-	# ((c.*parent).~tAssociate).foreignKey = #{a:Association|a.dst in c.*parent and a.dst_multiplicity = MANY and no a.~tAssociate}
-
+	no (c.~tAssociate).foreignKey
 }
-
 }
 
 pred SRInheritance[cs:set Class]{
@@ -159,8 +167,7 @@ fact{
 
 //recently added for enabling DSE
 pred mixedStrategy[cs:set Class]{
-	all c:cs| UnionSubclass[c] or JoinedSubclass[c] or 
-				UnionSuperclass[c]
+	all c:cs| UnionSubclass[c] or JoinedSubclass[c] or UnionSuperclass[c]
 }
 
 pred show{}

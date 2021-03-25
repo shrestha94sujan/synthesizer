@@ -18,9 +18,7 @@ sig Integer extends Type{}
 sig Real extends Type{}
 sig string extends Type{}
 sig Bool extends Type{}
-//one 
 sig Yes extends Bool{}
-//one 
 sig No extends Bool{}
 sig DType extends Type{}
 sig Longblob extends Type{}
@@ -36,6 +34,10 @@ abstract sig Association extends needHandle{
 	dst: one Class,
 	src_multiplicity: one Multiplicity_State,
 	dst_multiplicity:one Multiplicity_State
+}
+
+abstract sig Strategy {
+    assignees : set Class + Association
 }
 
 pred show{}

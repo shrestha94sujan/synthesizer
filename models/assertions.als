@@ -64,4 +64,3 @@ assert tableforAssociation{
 	all a:Association| (Association.src_multiplicity = MANY) implies one a.~tAssociate
 	all a:Association| one a.~tAssociate.tAssociate iff one a.~tAssociate
 }
-
